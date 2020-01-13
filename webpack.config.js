@@ -1,7 +1,9 @@
-const path = require('path');
-const slsw = require('serverless-webpack');
-const nodeExternals = require('webpack-node-externals');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+/* eslint-disable @typescript-eslint/no-var-requires */
+
+const path = require('path')
+const slsw = require('serverless-webpack')
+const nodeExternals = require('webpack-node-externals')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 module.exports = {
   context: __dirname,
@@ -9,6 +11,10 @@ module.exports = {
   entry: slsw.lib.entries,
   devtool: slsw.lib.webpack.isLocal ? 'cheap-module-eval-source-map' : 'source-map',
   resolve: {
+    alias: {
+      '@functions': path.resolve(__dirname, 'src', 'functions'),
+      '@utils': path.resolve(__dirname, 'src', 'utils'),
+    },
     extensions: ['.mjs', '.json', '.ts'],
     symlinks: false,
     cacheWithContext: false,
@@ -22,9 +28,8 @@ module.exports = {
   externals: [nodeExternals()],
   module: {
     rules: [
-      // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
       {
-        test: /\.(tsx?)$/,
+        test: /\.(ts?)$/,
         loader: 'ts-loader',
         exclude: [
           [
@@ -41,11 +46,11 @@ module.exports = {
     ],
   },
   plugins: [
-    // new ForkTsCheckerWebpackPlugin({
-    //   eslint: true,
-    //   eslintOptions: {
-    //     cache: true
-    //   }
-    // })
+    new ForkTsCheckerWebpackPlugin({
+      eslint: true,
+      eslintOptions: {
+        cache: true,
+      },
+    }),
   ],
-};
+}
