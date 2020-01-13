@@ -21,10 +21,4 @@ provider:
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
 
-functions:
-  hello:
-    handler: src/functions/handler.hello
-    events:
-      - http:
-          method: get
-          path: hello
+functions: ${file(./cloudformation-templates/functions.yml):functions}
