@@ -1,16 +1,19 @@
 import utils from 'aws-lambda-test-utils'
-import { hello } from '@functions/handler'
+import { messageEcho } from '@functions/handler'
+
+
+const TEST_MESSAGE = 'test message'
 
 const ev = utils.mockEventCreator.createAPIGatewayEvent({
-  body: JSON.stringify({ update: { message: 'TEST MESSAGE' } }),
+  body: JSON.stringify({ update: { message: TEST_MESSAGE } }),
 })
 
-test('if hello handler returns statuscode 200', async () => {
-  const response = await hello(ev)
+test('if messageEcho handler returns statuscode 200', async () => {
+  const response = await messageEcho(ev)
   expect(response.statusCode).toEqual(200)
 })
 
-test('if hello handler returns body with truth of 42', async () => {
-  const response = await hello(ev)
-  expect(JSON.parse(response.body).truth).toEqual(42)
+test('if messageEcho handler returns body with truth of 42', async () => {
+  const response = await messageEcho(ev)
+  expect(JSON.parse(response.body).message).toEqual(TEST_MESSAGE)
 })

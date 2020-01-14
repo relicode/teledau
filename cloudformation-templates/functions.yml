@@ -1,6 +1,6 @@
 functions:
   webhook:
-    handler: src/functions/handler.hello
+    handler: src/functions/handler.messageEcho
     events:
       - http:
           method: post
