@@ -1,12 +1,15 @@
-import {  APIGatewayProxyResult } from 'aws-lambda'
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import 'source-map-support/register'
+import { Update } from 'node-telegram-bot-api'
 
-import truth from '@utils/math'
 
+export const messageEcho = async (ev: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  const body = JSON.parse(ev.body)
+  const { update }: { update: Update } = body
+  const { message } = update
 
-export const hello = async (): Promise<APIGatewayProxyResult> => {
   return {
     statusCode: 200,
-    body: JSON.stringify({ truth }),
+    body: JSON.stringify({ message }),
   }
 }
