@@ -1,7 +1,7 @@
 {
   "name": "teledau",
-  "version": "0.0.1",
-  "description": "Serverless webpack example using Typescript",
+  "version": "0.0.2",
+  "description": "Telegram bot for bringing joy and happiness to all groups",
   "scripts": {
     "lint": "eslint src/**/*",
     "lint:fic": "eslint --fix src/**/*",
