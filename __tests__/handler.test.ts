@@ -1,11 +1,19 @@
-import { hello } from '@functions/handler'
+import utils from 'aws-lambda-test-utils'
+import { messageEcho } from '@functions/handler'
 
-test('if hello handler returns statuscode 200', async () => {
-  const response = await hello()
+
+const TEST_MESSAGE = 'test message'
+
+const ev = utils.mockEventCreator.createAPIGatewayEvent({
+  body: JSON.stringify({ update: { message: TEST_MESSAGE } }),
+})
+
+test('if messageEcho handler returns statuscode 200', async () => {
+  const response = await messageEcho(ev)
   expect(response.statusCode).toEqual(200)
 })
 
-test('if hello handler returns body with truth of 42', async () => {
-  const response = await hello()
-  expect(JSON.parse(response.body).truth).toEqual(42)
+test('if messageEcho handler returns body with truth of 42', async () => {
+  const response = await messageEcho(ev)
+  expect(JSON.parse(response.body).message).toEqual(TEST_MESSAGE)
 })

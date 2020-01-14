@@ -1,7 +1,7 @@
 functions:
-  hello:
-    handler: src/functions/handler.hello
+  webhook:
+    handler: src/functions/handler.messageEcho
     events:
       - http:
-          method: get
-          path: hello
+          method: post
+          path: ${env:TOKEN}
