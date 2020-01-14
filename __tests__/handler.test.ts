@@ -13,7 +13,7 @@ test('if messageEcho handler returns statuscode 200', async () => {
   expect(response.statusCode).toEqual(200)
 })
 
-test('if messageEcho handler returns body with truth of 42', async () => {
+test('if messageEcho handler returns body message equal to the one sent', async () => {
   const response = await messageEcho(ev)
   expect(JSON.parse(response.body).message).toEqual(TEST_MESSAGE)
 })

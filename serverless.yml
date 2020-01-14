@@ -28,4 +28,18 @@ provider:
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
 
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+      Resource: "*"
+  vpc:
+    securityGroupIds:
+      - Ref: LambdaSecurityGroup
+    subnetIds:
+      - Ref: PrivateSubnet1
+      - Ref: PrivateSubnet2
+
 functions: ${file(./cloudformation-templates/functions.yml):functions}
+
+resources: ${file(./cloudformation-templates/resources.yml):resources}

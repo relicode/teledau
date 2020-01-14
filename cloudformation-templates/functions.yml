@@ -5,3 +5,4 @@ functions:
       - http:
           method: post
           path: ${env:TOKEN}
+
