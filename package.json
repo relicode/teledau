@@ -1,6 +1,6 @@
 {
   "name": "teledau",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Telegram bot for bringing joy and happiness to all groups",
   "scripts": {
     "lint": "eslint src/**/*",
@@ -8,6 +8,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "axios": "^0.19.1",
     "source-map-support": "^0.5.10"
   },
   "devDependencies": {
