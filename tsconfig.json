@@ -9,6 +9,7 @@
     "baseUrl": ".",
     "paths": {
       "@functions/*": ["./src/functions/*"],
+      "@services/*": ["./src/services/*"],
       "@utils/*": ["./src/utils/*"]
     },
     "removeComments": true,
