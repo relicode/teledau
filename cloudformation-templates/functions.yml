@@ -4,5 +4,5 @@ functions:
     events:
       - http:
           method: post
-          path: ${env:TOKEN}
+          path: ${env:BOT_TOKEN}
 
