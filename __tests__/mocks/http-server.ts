@@ -1,27 +1,38 @@
-import * as http from 'http'
-
+import express, { json, Router } from 'express'
 
 const {
-  TEST_API_HOST,
-  TEST_API_PORT,
+  TEST_API_403_PATH,
   TEST_API_BASE_PATH,
-  TEST_API_RESOURCE_PATH,
+  TEST_API_ECHO_PATH,
+  TEST_SERVER_HOST,
+  TEST_SERVER_KILL_PATH,
+  TEST_SERVER_PORT,
+  TEST_SERVER_STATUS_PATH,
 } = process.env
 
-console.log(`Test API running at ${TEST_API_HOST}:${TEST_API_PORT}${TEST_API_BASE_PATH}`)
+const app = express()
+const apiRouter = Router({ strict: true })
 
-http.createServer((req, res) => {
-  const { url } = req
-  
-  if (url === '/stop') { process.exit(0) }
+apiRouter.post(TEST_API_ECHO_PATH, (req, res) => {
+  res.json(req.body)
+})
 
-  if (url === `${TEST_API_BASE_PATH}${TEST_API_RESOURCE_PATH}`) {
-    res.writeHead(200, { 'Content-Type': 'application/json' })
-    res.write(JSON.stringify({ ok: true }))
-  } else {
-    res.writeHead(404, { 'Content-Type': 'application/json' })
-    res.write(JSON.stringify({ ok: false }))
-  }
-  res.end()
-}).listen(TEST_API_PORT)
+apiRouter.post(TEST_API_403_PATH, (_req, res) => {
+  res.status(403).json({ message: 'The server understood the request, but is refusing to authorize it.' })
+})
 
+app.use(TEST_API_BASE_PATH, json(), apiRouter)
+
+app.get(TEST_SERVER_STATUS_PATH, (_req, res) => {
+  res.status(200).send()
+})
+
+app.get(TEST_SERVER_KILL_PATH, async (_req, res) => {
+  await res.status(200).send()
+  console.log('Server shut down successfully')
+  process.exit(0)
+})
+
+app.listen(TEST_SERVER_PORT)
+
+console.log(`Test server running at ${TEST_SERVER_HOST}:${TEST_SERVER_PORT}`)
